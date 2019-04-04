@@ -23,4 +23,11 @@ public class HelloRestController {
         return new ResponseEntity(result,HttpStatus.OK);
         //testcomment
     }
+    @RequestMapping(value = "/postName/{name}", method= RequestMethod.POST)
+    public ResponseEntity<String> receiveName(@PathVariable String name) {
+        System.out.println("in receiveName " + name);
+        String result = "works";
+        return new ResponseEntity(result,HttpStatus.OK);
+        //testcomment
+    }
 }
