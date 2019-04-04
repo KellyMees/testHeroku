@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -9,9 +10,10 @@ import org.springframework.web.bind.annotation.*;
 public class HelloRestController {
 
     @PostMapping(value = "/helloWorld/{id}")
-    public HttpEntity receiveName(@PathVariable Long id) {
+    public ResponseEntity receiveName(@PathVariable Long id) {
         System.out.println("in receiveName " + id);
-        return new HttpEntity(HttpStatus.OK);
+        String result = "works";
+        return new ResponseEntity(result,HttpStatus.OK);
         //testcomment
     }
 }
