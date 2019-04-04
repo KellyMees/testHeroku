@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ public class HelloRestController {
         //testcomment
     }
     @GetMapping(value = "/hello/{id}")
-    public ResponseEntity receiveGet(@PathVariable Long id) {
+    public ResponseEntity<String> receiveGet(@PathVariable Long id) {
         System.out.println("in receiveName " + id);
         String result = "works";
         return new ResponseEntity(result,HttpStatus.OK);
