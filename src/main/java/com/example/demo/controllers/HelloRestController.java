@@ -17,7 +17,7 @@ public class HelloRestController {
         //testcomment
     }
     @GetMapping(value = "/hello/{id}")
-    public ResponseEntity receiveGet(@PathVariable Long id) {
+    public ResponseEntity<String> receiveGet(@PathVariable Long id) {
         System.out.println("in receiveName " + id);
         String result = "works";
         return new ResponseEntity(result,HttpStatus.OK);
