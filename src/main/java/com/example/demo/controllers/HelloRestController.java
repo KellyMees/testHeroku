@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 public class HelloRestController {
 
     @PostMapping(value = "/helloWorld/{id}")
-    public ResponseEntity receiveName(@PathVariable Long id) {
+    public ResponseEntity<String> receiveName(@PathVariable Long id) {
         System.out.println("in receiveName " + id);
         String result = "works";
         return new ResponseEntity(result,HttpStatus.OK);
