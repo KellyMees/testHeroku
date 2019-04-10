@@ -46,8 +46,6 @@ public class HelloRestController {
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/dialogFlow", method = RequestMethod.POST)
     public ResponseEntity<String> webhookCall(@RequestBody String msg) throws IOException{
-        System.out.println("in webhookCall");
-        System.out.println(msg);
         System.out.println("##############################");
         GoogleCloudDialogflowV2WebhookRequest request = jacksonFactory.createJsonParser(msg)
                 .parse(GoogleCloudDialogflowV2WebhookRequest.class);
@@ -62,8 +60,6 @@ public class HelloRestController {
 
         jsonGenerator.serialize(response);
         jsonGenerator.flush();
-        System.out.println("###############");
-        System.out.println(response);
 
 
         return new ResponseEntity(response, HttpStatus.OK);
