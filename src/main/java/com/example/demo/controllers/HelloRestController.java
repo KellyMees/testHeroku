@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,5 +30,10 @@ public class HelloRestController {
         String result = "works";
         return new ResponseEntity(result,HttpStatus.OK);
         //testcomment
+    }
+    @PostMapping(value = "/nameUpdate/{name}/{status}")
+    public HttpEntity statusChange(@PathVariable String name, @PathVariable String status){
+        System.out.println("in statusChange for " + name + " change status to " + status);
+        return new HttpEntity(HttpStatus.OK);
     }
 }
