@@ -1,6 +1,5 @@
 package com.example.demo.controllers;
 
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,27 +42,26 @@ public class HelloRestController {
         return new HttpEntity(HttpStatus.OK);
     }*/
 
-    @CrossOrigin(origins = "*")
+   // @CrossOrigin(origins = "*")
     @RequestMapping(value = "/dialogFlow", method = RequestMethod.POST)
     public ResponseEntity<String> webhookCall(@RequestBody String msg) throws IOException{
         System.out.println(msg);
         System.out.println("##############################");
         GoogleCloudDialogflowV2WebhookRequest request = jacksonFactory.createJsonParser(msg)
                 .parse(GoogleCloudDialogflowV2WebhookRequest.class);
-        for(Map.Entry<String,Object> entry:  request.getQueryResult().getOutputContexts().get(0).getParameters().entrySet()){
-            System.out.println("key: " + entry.getKey() + " value: " + entry.getValue());
+        System.out.println("call van action: " + request.getQueryResult().getAction());
+        System.out.println("# parameters eruit gehaald: #");
+        for(Map.Entry<String, Object> e : request.getQueryResult().getParameters().entrySet()){
+            System.out.println(e.getKey() + " heeft waarde " + e.getValue());
         }
-        for(Map.Entry<String,Object> e :request.getOriginalDetectIntentRequest().getPayload().entrySet()){
-            if(e.getKey().equals("user")){
-                System.out.println(e.getValue());
-            }
-           // System.out.println("key: " + e.getKey() + " value: " + e.getValue().toString());
-        }
+
+
 
        StringWriter stringWriter = new StringWriter();
         JsonGenerator jsonGenerator = jacksonFactory.createJsonGenerator(stringWriter);
         GoogleCloudDialogflowV2WebhookResponse response = new GoogleCloudDialogflowV2WebhookResponse();
-        response.setFulfillmentText("Het is gelukt!");
+        response.setFulfillmentText("Het is gelukt! De conversatie wordt afgesloten.");
+
 
         jsonGenerator.serialize(response);
         jsonGenerator.flush();
