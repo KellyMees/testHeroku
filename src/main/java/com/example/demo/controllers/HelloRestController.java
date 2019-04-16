@@ -44,29 +44,32 @@ public class HelloRestController {
 
    // @CrossOrigin(origins = "*")
     @RequestMapping(value = "/dialogFlow", method = RequestMethod.POST)
-    public ResponseEntity<String> webhookCall(@RequestBody String msg) throws IOException{
+    public ResponseEntity<String> webhookCall(@RequestBody String msg) {
         System.out.println(msg);
         System.out.println("##############################");
-        GoogleCloudDialogflowV2WebhookRequest request = jacksonFactory.createJsonParser(msg)
-                .parse(GoogleCloudDialogflowV2WebhookRequest.class);
-        System.out.println("call van action: " + request.getQueryResult().getAction());
-        System.out.println("# parameters eruit gehaald: #");
-        for(Map.Entry<String, Object> e : request.getQueryResult().getParameters().entrySet()){
-            System.out.println(e.getKey() + " heeft waarde " + e.getValue());
+        try {
+            GoogleCloudDialogflowV2WebhookRequest request = jacksonFactory.createJsonParser(msg)
+                    .parse(GoogleCloudDialogflowV2WebhookRequest.class);
+            System.out.println("call van action: " + request.getQueryResult().getAction());
+            System.out.println("# parameters eruit gehaald: #");
+            for (Map.Entry<String, Object> e : request.getQueryResult().getParameters().entrySet()) {
+                System.out.println(e.getKey() + " heeft waarde " + e.getValue());
+            }
+
+
+            StringWriter stringWriter = new StringWriter();
+            JsonGenerator jsonGenerator = jacksonFactory.createJsonGenerator(stringWriter);
+            GoogleCloudDialogflowV2WebhookResponse response = new GoogleCloudDialogflowV2WebhookResponse();
+            response.setFulfillmentText("Het is gelukt! De conversatie wordt afgesloten.");
+
+
+            jsonGenerator.serialize(response);
+            jsonGenerator.flush();
+            return new ResponseEntity(response, HttpStatus.OK);
+        }catch (IOException e){
+            return new ResponseEntity("Er liep iets fout",HttpStatus.OK);
         }
 
 
-
-       StringWriter stringWriter = new StringWriter();
-        JsonGenerator jsonGenerator = jacksonFactory.createJsonGenerator(stringWriter);
-        GoogleCloudDialogflowV2WebhookResponse response = new GoogleCloudDialogflowV2WebhookResponse();
-        response.setFulfillmentText("Het is gelukt! De conversatie wordt afgesloten.");
-
-
-        jsonGenerator.serialize(response);
-        jsonGenerator.flush();
-
-
-        return new ResponseEntity(response, HttpStatus.OK);
     }
 }
