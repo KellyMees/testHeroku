@@ -46,7 +46,7 @@ public class HelloRestController {
     @RequestMapping(value = "/dialogFlow", method = RequestMethod.POST)
     public ResponseEntity<String> webhookCall(@RequestBody String msg) {
         System.out.println(msg);
-        System.out.println("##############################");
+        System.out.println("#############################");
         try {
             GoogleCloudDialogflowV2WebhookRequest request = jacksonFactory.createJsonParser(msg)
                     .parse(GoogleCloudDialogflowV2WebhookRequest.class);
