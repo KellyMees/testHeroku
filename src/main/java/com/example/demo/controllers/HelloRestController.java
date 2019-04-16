@@ -60,7 +60,7 @@ public class HelloRestController {
             for (Map.Entry<String, Object> e : request.getQueryResult().getParameters().entrySet()) {
                 System.out.println(e.getKey() + " heeft waarde " + e.getValue());
                 //error handling test when a given name doesn't exists
-                if(e.getKey().equals("jos")){
+                if(e.getKey().equals("name") && e.getValue().equals("jos")){
                     response.setFulfillmentText("Deze persoon staat niet in het systeem.");
                     jsonGenerator.serialize(response);
                     jsonGenerator.flush();
